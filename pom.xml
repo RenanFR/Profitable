@@ -12,11 +12,12 @@
 
   <modules>
   	<module>profitable-model</module>
+    <module>profitable-api</module>
   </modules>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
+    <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
   </properties>
   
 	<dependencyManagement>
@@ -37,24 +38,54 @@
 	  
   <dependencies>
   
-	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
-	<dependency>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-data-mongodb</artifactId>
-	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-jdbc</artifactId>
-	</dependency>
-	
 	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
 	<dependency>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter</artifactId>
 	</dependency>
+  
+	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-data-jpa</artifactId>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-hateoas -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-hateoas</artifactId>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.springframework.hateoas/spring-hateoas -->
+	<dependency>
+	    <groupId>org.springframework.hateoas</groupId>
+	    <artifactId>spring-hateoas</artifactId>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-security</artifactId>
+	</dependency>		
 	
   </dependencies>
+  
+  <build>
+  
+      <pluginManagement>
+      
+          <plugins>
+          
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <version>3.0.0-M3</version>
+              </plugin>
+              
+          </plugins>
+          
+      </pluginManagement>
+      
+  </build>  
   
 </project>

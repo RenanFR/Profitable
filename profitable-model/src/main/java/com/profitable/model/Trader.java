@@ -1,9 +1,26 @@
 package com.profitable.model;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import lombok.AccessLevel;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,18 +32,74 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class Trader {
+@Entity
+@Table(name = "tbl_trader")
+public class Trader extends RepresentationModel<Trader> implements ProfitableEntity, UserDetails {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Getter(value = AccessLevel.NONE)
-	private ObjectId id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
+	@Column(name = "first_name")
 	private String firstName;
 	
+	@Column(name = "last_name")
 	private String lastName;
-
-	public String getId() {
-		return id.toHexString();
-	}
 	
+	private String email;
+	
+	private String password;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JsonManagedReference
+	@JoinTable(name = "tbl_user_role",
+				joinColumns = @JoinColumn(
+          			name = "user_id", referencedColumnName = "id"), 
+    			inverseJoinColumns = @JoinColumn(
+					name = "role_id", referencedColumnName = "role"))
+	@Builder.Default
+	private List<Role> profiles = new ArrayList<Role>();
+
+	@Override
+	public Long getEntityId() {
+		return id;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return profiles;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
+
 }

@@ -1,9 +1,13 @@
 module com.profitable.model {
 	
 	requires static lombok;
-	requires org.mongodb.bson;
-	requires spring.data.commons;
+	requires transitive java.persistence;
+	requires transitive org.hibernate.orm.core;
+	requires transitive spring.hateoas;
+	requires transitive spring.security.core;
+	requires com.fasterxml.jackson.annotation;
 	
-	exports com.profitable.model to com.profitable.db;
-	
+	exports com.profitable.model to com.profitable.api;
+	opens com.profitable.model to org.hibernate.orm.core, spring.core, spring.beans;
+	    
 }
